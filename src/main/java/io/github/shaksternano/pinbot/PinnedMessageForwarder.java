@@ -141,7 +141,7 @@ public class PinnedMessageForwarder {
         try (var iconStream = new URI(avatarUrl).toURL().openStream()) {
             return Optional.of(Icon.from(iconStream));
         } catch (IOException | URISyntaxException e) {
-            Main.getLogger().error("Failed to create icon for " + user + ".", e);
+            Main.getLogger().error("Failed to create icon for {}.", user, e);
             return Optional.empty();
         }
     }

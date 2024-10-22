@@ -47,7 +47,7 @@ public class CommandClient {
     private static SlashCommandData createGroupedCommand(Map.Entry<String, List<Command>> commandGroup) {
         var group = commandGroup.getKey();
         var commands = commandGroup.getValue();
-        var firstCommand = commands.get(0);
+        var firstCommand = commands.getFirst();
         var permissions = firstCommand.getPermissions();
         var guildOnly = firstCommand.isGuildOnly();
         var subCommands = commands.stream()
@@ -72,7 +72,7 @@ public class CommandClient {
                 response = command.execute(event);
             } catch (Throwable t) {
                 response = "An error occurred while executing the command.";
-                Main.getLogger().error("An error occurred while executing the command " + command, t);
+                Main.getLogger().error("An error occurred while executing the command {}", command, t);
             }
             event.reply(response).setEphemeral(true).queue();
         }
