@@ -17,6 +17,7 @@ import net.dv8tion.jda.api.utils.FileUpload;
 import net.dv8tion.jda.api.utils.SplitUtil;
 import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 import net.dv8tion.jda.api.utils.messages.MessageCreateData;
+import okhttp3.MediaType;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
@@ -254,7 +255,18 @@ public class PinnedMessageForwarder {
                 for (var attachment : messageAttachments) {
                     var inputStreamFuture = attachment.getProxy().download();
                     future = future.thenCompose(unused -> inputStreamFuture)
-                        .thenAccept(inputStream -> messageBuilder.addFiles(FileUpload.fromData(inputStream, attachment.getFileName())));
+                        .thenAccept(inputStream -> {
+                            var upload = FileUpload.fromData(inputStream, attachment.getFileName());
+                            var contentType = attachment.getContentType();
+                            if (contentType != null) {
+                                var mediaType = MediaType.parse(contentType);
+                                var waveform = attachment.getWaveform();
+                                if (mediaType != null && waveform != null) {
+                                    upload.asVoiceMessage(mediaType, waveform, attachment.getDuration());
+                                }
+                            }
+                            messageBuilder.addFiles(upload);
+                        });
                 }
             }
             messageFutures.add(future.thenApply(unused -> messageBuilder.build()));
