@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.entities.channel.Channel;
 import net.dv8tion.jda.api.entities.channel.attribute.IWebhookContainer;
 import net.dv8tion.jda.api.entities.channel.concrete.ThreadChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildChannel;
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
@@ -82,7 +83,7 @@ public class PinnedMessageForwarder {
 
     private static void forwardPinnedMessage(Message message, long pinChannelId) {
         var sentFrom = message.getChannel();
-        var pinChannel = message.getGuild().getChannelById(Channel.class, pinChannelId);
+        var pinChannel = message.getGuild().getChannelById(GuildChannel.class, pinChannelId);
         getWebhookContainer(pinChannel).ifPresentOrElse(
             webhookContainer -> webhookContainer.retrieveWebhooks()
                 .submit()

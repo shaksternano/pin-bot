@@ -2,16 +2,15 @@ val jdaVersion: String by project
 val mapdbVersion: String by project
 val guavaVersion: String by project
 val gsonVersion: String by project
-val log4j2Version: String by project
-val disruptorVersion: String by project
+val logbackVersion: String by project
 val junitVersion: String by project
 
 plugins {
     id("java")
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.gradleup.shadow") version "8.3.3"
 }
 
-group = "io.github.shaksternano.pinbot"
+group = "io.github.shaksternano"
 base.archivesName.set("pin-bot")
 version = "1.0.1"
 
@@ -26,8 +25,7 @@ dependencies {
     implementation("org.mapdb:mapdb:$mapdbVersion")
     implementation("com.google.guava:guava:$guavaVersion-jre")
     implementation("com.google.code.gson:gson:$gsonVersion")
-    implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4j2Version")
-    implementation("com.lmax:disruptor:$disruptorVersion")
+    implementation("ch.qos.logback:logback-classic:$logbackVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
 }
@@ -41,13 +39,13 @@ tasks {
         archiveClassifier.set("")
         mergeServiceFiles()
         minimize {
-            exclude(dependency("org.apache.logging.log4j:.*:.*"))
+            exclude(dependency("ch.qos.logback:.*:.*"))
             exclude(dependency("org.mapdb:.*:.*"))
         }
         manifest {
             attributes(
                 mapOf(
-                    "Main-Class" to "${project.group}.Main",
+                    "Main-Class" to "${project.group}.pinbot.Main",
                 )
             )
         }

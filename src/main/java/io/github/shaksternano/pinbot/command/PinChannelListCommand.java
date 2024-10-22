@@ -3,6 +3,7 @@ package io.github.shaksternano.pinbot.command;
 import io.github.shaksternano.pinbot.Database;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.channel.Channel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import org.jetbrains.annotations.Nullable;
@@ -45,8 +46,8 @@ public class PinChannelListCommand extends PinChannelSubCommand {
 
         private ChannelPair(Map.Entry<Long, Long> entry, Guild guild) {
             this(
-                guild.getChannelById(Channel.class, entry.getKey()),
-                guild.getChannelById(Channel.class, entry.getValue())
+                guild.getChannelById(GuildChannel.class, entry.getKey()),
+                guild.getChannelById(GuildChannel.class, entry.getValue())
             );
         }
 
