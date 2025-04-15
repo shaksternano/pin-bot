@@ -40,7 +40,7 @@ public class CommandClient {
     private static SlashCommandData createUngroupedCommand(Command command) {
         return Commands.slash(command.getName(), command.getDescription())
             .setDefaultPermissions(command.getPermissions())
-            .setGuildOnly(command.isGuildOnly())
+            .setContexts(command.getContexts())
             .addOptions(command.getOptions());
     }
 
@@ -49,14 +49,13 @@ public class CommandClient {
         var commands = commandGroup.getValue();
         var firstCommand = commands.getFirst();
         var permissions = firstCommand.getPermissions();
-        var guildOnly = firstCommand.isGuildOnly();
         var subCommands = commands.stream()
             .map(command -> new SubcommandData(command.getName(), command.getDescription())
                 .addOptions(command.getOptions())
             ).toList();
         return Commands.slash(group, group)
             .setDefaultPermissions(permissions)
-            .setGuildOnly(guildOnly)
+            .setContexts(firstCommand.getContexts())
             .addSubcommands(subCommands);
     }
 

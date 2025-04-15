@@ -1,10 +1,12 @@
 package io.github.shaksternano.pinbot.command;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.InteractionContextType;
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public interface Command {
@@ -17,7 +19,7 @@ public interface Command {
 
     DefaultMemberPermissions getPermissions();
 
-    boolean isGuildOnly();
+    List<InteractionContextType> getContexts();
 
     String getName();
 

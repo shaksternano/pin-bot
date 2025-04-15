@@ -3,7 +3,6 @@ package io.github.shaksternano.pinbot;
 import net.dv8tion.jda.api.events.channel.ChannelDeleteEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,12 +22,7 @@ public class PinBotEventListener extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        CompletableFuture.runAsync(() -> PinnedMessageForwarder.sendCustomPinConfirmationIfPinChannelSet(event));
-    }
-
-    @Override
-    public void onMessageUpdate(@NotNull MessageUpdateEvent event) {
-        CompletableFuture.runAsync(() -> PinnedMessageForwarder.forwardMessageIfPinned(event));
+        CompletableFuture.runAsync(() -> PinnedMessageForwarder.forwardPinnedMessageIfPinChannelSet(event));
     }
 
     @Override

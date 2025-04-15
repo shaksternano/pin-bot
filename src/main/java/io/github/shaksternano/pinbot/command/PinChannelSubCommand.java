@@ -3,9 +3,11 @@ package io.github.shaksternano.pinbot.command;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.InteractionContextType;
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 public abstract class PinChannelSubCommand extends BaseCommand {
@@ -28,8 +30,8 @@ public abstract class PinChannelSubCommand extends BaseCommand {
     }
 
     @Override
-    public boolean isGuildOnly() {
-        return true;
+    public List<InteractionContextType> getContexts() {
+        return List.of(InteractionContextType.GUILD);
     }
 
     protected Guild getGuild(SlashCommandInteractionEvent event) {
