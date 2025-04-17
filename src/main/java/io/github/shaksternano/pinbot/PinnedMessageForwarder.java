@@ -237,13 +237,7 @@ public class PinnedMessageForwarder {
             if (attachment.getSize() <= maxFileSize && reUploadAttachment(attachment)) {
                 attachments.add(attachment);
             } else {
-                String attachmentUrl;
-                var fileExtension = attachment.getFileExtension();
-                if (fileExtension != null && fileExtension.equalsIgnoreCase("gif")) {
-                    attachmentUrl = attachment.getProxyUrl();
-                } else {
-                    attachmentUrl = attachment.getUrl();
-                }
+                String attachmentUrl = attachment.getUrl();
                 messageContentBuilder.append("\n").append(attachmentUrl.split("\\?")[0]);
             }
         }
