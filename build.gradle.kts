@@ -12,7 +12,7 @@ plugins {
 
 group = "io.github.shaksternano"
 base.archivesName.set("pin-bot")
-version = "1.0.3"
+version = "1.0.4"
 
 repositories {
     mavenCentral()
